@@ -27,7 +27,7 @@ export class AuthService {
     );
 
     if (user && passwordCompare) {
-      return { login: user.login, email: user.email, id: user['_id'] };
+      return { name: user.name, email: user.email, id: user['_id'] };
     }
 
     this.logger.error(

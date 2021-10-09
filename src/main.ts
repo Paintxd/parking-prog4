@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { RedisSession } from './session/redisSession';
+import { Logger } from '@nestjs/common';
 
 require('dotenv').config();
 
@@ -17,6 +18,6 @@ async function bootstrap() {
   app.use(RedisSession.getSession());
 
   await app.listen(PORT);
-  console.log(`listening on ${PORT}`);
+  new Logger().log(`listening on ${PORT}`);
 }
 bootstrap();

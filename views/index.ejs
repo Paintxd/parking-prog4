@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 	<head>
-    <meta charset="utf-8>
-		<link rel="stylesheet", href="/css/reset.css" />
+		<meta charset="utf-8>
+		<link rel="stylesheet" , href="/css/reset.css" />
 		<title>Estacionamentinho</title>
 		<link
 			rel="stylesheet"
@@ -17,24 +17,22 @@
 
 	<body>
 		<header>
-      <img src="logo.png" alt="logo da empresa">
+			<img src="logo.png" alt="logo da empresa" />
 			<h1>Seja bem vindo</h1>
 			<nav>
 				<ul>
-					<li><a href="home.ejs">Cadastro Usuário</a></li>
-					<li><a href="usuario.ejs">Cadastro Usuário</a></li>
-					<li><a href="usuario.ejs">Cadastro Usuário</a></li>
+					<li><a href="/register">Cadastro Usuário</a></li>
 				</ul>
 			</nav>
 		</header>
 
 		<main>
-			<form>
-				<label for="cpf"> Digíte seu CPF:</label>
-				<input type="text" id="cpf" required />
+			<form action="/auth/login" method="post">
+				<label for="login"> Digíte seu login:</label>
+				<input type="text" id="login" name="login" required />
 
-				<label for="senha">Digíte sua senha:</label>
-				<input type="text" id="senha" required />
+				<label for="password">Digíte sua senha:</label>
+				<input type="password" id="password" name="password" required />
 
 				<input type="submit" value="Entrar" />
 			</form>

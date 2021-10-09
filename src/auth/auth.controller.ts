@@ -3,6 +3,7 @@ import {
   Controller,
   Logger,
   Post,
+  Redirect,
   Session,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -16,6 +17,7 @@ export class AuthController {
   }
 
   @Post('/login')
+  @Redirect('/home')
   async login(
     @Body() loginDto: LoginDto,
     @Session() session: Record<string, any>,
@@ -27,5 +29,12 @@ export class AuthController {
     const user = await this.authService.validateUser(loginDto);
 
     return this.authService.login(user, session);
+  }
+
+  @Post('/logout')
+  @Redirect('/')
+  async logout(@Session() session: Record<string, any>) {
+    session.destroy();
+    return;
   }
 }
