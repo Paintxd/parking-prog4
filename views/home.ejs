@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 	<head>
-		<meta charset="utf-8>
+		<meta charset="utf-8" />
 		<link rel="stylesheet" , href="/css/reset.css" />
 		<title>Estacionamentinho</title>
 		<link
@@ -28,6 +28,43 @@
 				</ul>
 			</nav>
 		</header>
+
+		<form action="/vehicles/add" method="post">
+			<label for="type"> Tipo do veículo:</label>
+			<select name="type" id="type">
+				<option value="carro">Carro</option>
+				<option value="moto">Moto</option>
+				<option value="onibus">Onibus</option>
+				<option value="caminhao">Caminhao</option>
+			</select>
+
+			<label for="description"> Identificação:</label>
+			<input type="text" id="description" name="description" required />
+
+			<label for="licensePlate"> Placa:</label>
+			<input
+				type="text"
+				id="licensePlate"
+				name="licensePlate"
+				required
+				oninput="this.value = this.value.toUpperCase();"
+				maxlength="7"
+			/>
+
+			<button type="submit">Adicionar</button>
+		</form>
+
+		<main>
+			<h2>Seus Veículos</h2>
+			<ul>
+				<% user.vehicles.forEach(vehicle => { %>
+				<li>
+					<%= vehicle.description %><br />
+					<%= vehicle.licensePlate %><br />
+				</li>
+				<% }); %>
+			</ul>
+		</main>
 
 		<footer>
 			<script

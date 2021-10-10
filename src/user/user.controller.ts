@@ -1,10 +1,12 @@
-import { Session, UseGuards } from '@nestjs/common';
-import { Get } from '@nestjs/common';
 import {
   Body,
   Controller,
+  Get,
   Logger,
   Post,
+  Redirect,
+  Session,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { UserDto } from './user.dto';
@@ -19,7 +21,7 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Get('/')
-  async getSessionUser(@Session() session: Record<string, any>,) {
+  async getSessionUser(@Session() session: Record<string, any>) {
     const user = session.user;
     this.logger.log(`Buscando usuario da sessao - id - ${user.id}`);
 
@@ -27,11 +29,22 @@ export class UserController {
   }
 
   @Post('/register')
+  @Redirect('/')
   async registerUser(@Body() userDto: UserDto) {
     this.logger.log(
       `Registering user - userDto: ${JSON.stringify(userDto)}`,
       'UserController - registerUser',
     );
     return this.userService.registerUser(userDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('/currency')
+  @Redirect('/home')
+  async depositCurrency(
+    @Session() session: Record<string, any>,
+    @Body() value: number,
+  ) {
+    return this.userService.depositCurrency(session.user.id, value);
   }
 }

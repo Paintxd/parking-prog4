@@ -20,8 +20,8 @@ export class UserService {
     this.logger = new Logger();
   }
 
-  async getUserById(id: string): Promise<any> {
-    const { password, ...user } = await this.userModel.findOne({ _id: id }).lean();
+  async getUserById(id: string): Promise<Partial<User>> {
+    const { password, ...user } = await this.userModel.findById(id).lean();
 
     return user;
   }
@@ -41,6 +41,13 @@ export class UserService {
     this.logger.log(`User login: ${login} found`);
 
     return user;
+  }
+
+  async depositCurrency(userId: string, value: number): Promise<User> {
+    const user = await this.getUserById(userId);
+    const currency = user.currency += value;
+
+    return await this.userModel.findByIdAndUpdate(userId, { currency }).lean();
   }
 
   async registerUser(userDto: UserDto): Promise<User> {

@@ -6,8 +6,8 @@ para o devido controle de uma simulação com base em eventos reais.a
 
 Esse software irá conter:
 
-- [ ] CRUD para o cadastro do Usuário
-- [ ] CRUD para o cadastro do Veículo
+- [x] CRUD para o cadastro do Usuário
+- [x] CRUD para o cadastro do Veículo
 - [ ] Operações de Entrada/Saída de crédito por Usuário
 - [x] Controle de Login com criptografia de senha
 - [ ] Controle de Tempo por veículo estacionado

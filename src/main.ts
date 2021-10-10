@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { RedisSession } from './session/redisSession';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 require('dotenv').config();
 
@@ -16,6 +16,7 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('ejs');
   app.use(RedisSession.getSession());
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(PORT);
   new Logger().log(`listening on ${PORT}`);

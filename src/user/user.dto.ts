@@ -2,6 +2,11 @@ import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 
 export class UserDto {
   @Length(5, 20, {
+    message: 'Nome deve possuir no minimo 5 caracteres e no maximo 120',
+  })
+  name: string;
+
+  @Length(5, 20, {
     message: 'Login deve possuir no minimo 5 caracteres e no maximo 20',
   })
   login: string;

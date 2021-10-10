@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 	<head>
 		<link rel="stylesheet" , href="/css/reset.css" />
-    <title>Estacionamentinho</title>
+		<title>Estacionamentinho</title>
 		<link
 			rel="stylesheet"
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -16,29 +16,29 @@
 
 	<body>
 		<header>
-      <h1>Cadastro de Usuário</h1>
-    </header>
-    
-    <main>
-      <form>
-        <label for="name">Nome:</label>
-        <input type="text" id="name" required>
+			<h1>Cadastro de Usuário</h1>
+		</header>
 
-        <label for="password">Senha:</label>
-        <input type="password" id="password" required>
+		<main>
+			<form action="/user/register" method="post">
+				<label for="name">Nome:</label>
+				<input type="text" id="name" name="name" required />
 
-        <label for="cpf">CPF:</label>
-        <input type="text" id="nome" required>
+				<label for="login">Login:</label>
+				<input type="text" id="name" name="login" required />
 
+				<label for="password">Senha:</label>
+				<input type="password" id="password" name="password" required />
 
-        <label for="email">E-mail:</label>
-        <input type="text" id="email" required>
+				<label for="cpf">CPF:</label>
+				<input type="text" id="cpf" name="cpf" required />
 
-        <input type="submit" value="Salvar">
-      </form>
+				<label for="email">E-mail:</label>
+				<input type="text" id="email" name="email" required />
 
-      
-    </main>
+				<input type="submit" value="Salvar" />
+			</form>
+		</main>
 
 		<footer>
 			<script
