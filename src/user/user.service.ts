@@ -7,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import * as argon2 from 'argon2';
 import { Model } from 'mongoose';
-import { UserDto } from './user.dto';
+import { UserDto } from './dtos/user.dto';
 import { User, UserDocument } from './user.schema';
 
 @Injectable()

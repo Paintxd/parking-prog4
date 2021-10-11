@@ -9,7 +9,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
-import { UserDto } from './user.dto';
+import { DepositCurrencyDto } from './dtos/deposit-currenct.dto';
+import { UserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 
 @Controller('/user')
@@ -43,8 +44,15 @@ export class UserController {
   @Redirect('/home')
   async depositCurrency(
     @Session() session: Record<string, any>,
-    @Body() value: number,
+    @Body() depositCurrencyDto: DepositCurrencyDto,
   ) {
-    return this.userService.depositCurrency(session.user.id, value);
+    const userId = session.user.id;
+    const value = depositCurrencyDto.value;
+    this.logger.log(
+      `Depositing currency userId:  ${userId} - value: ${value}`,
+      'UserController - depositCurrency',
+    );
+
+    return this.userService.depositCurrency(userId, value);
   }
 }

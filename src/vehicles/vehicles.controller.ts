@@ -9,8 +9,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
-import { RemoveVehicleDto } from './interfaces/remove-vehicle.dto';
-import { VehicleDto } from './vehicle.dto';
+import { RemoveVehicleDto } from './dtos/remove-vehicle.dto';
+import { VehicleDto } from './dtos/vehicle.dto';
 import { VehiclesService } from './vehicles.service';
 
 @Controller('/vehicles')
@@ -45,14 +45,12 @@ export class VehiclesController {
     @Body() removeVehicleDto: RemoveVehicleDto,
   ) {
     const userId = session.user.id;
+    const licensePlate = removeVehicleDto.licensePlate;
     this.logger.log(
-      `Deleting vehicle userId:  ${userId} - licensePlate: ${removeVehicleDto.licensePlate}`,
+      `Deleting vehicle userId:  ${userId} - licensePlate: ${licensePlate}`,
       'VehiclesController - deleteVehicle',
     );
 
-    return this.vehiclesService.deleteVehicle(
-      userId,
-      removeVehicleDto.licensePlate,
-    );
+    return this.vehiclesService.deleteVehicle(userId, licensePlate);
   }
 }
