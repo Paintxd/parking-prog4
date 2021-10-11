@@ -2,12 +2,14 @@ import {
   Body,
   Controller,
   Logger,
+  Patch,
   Post,
   Redirect,
   Session,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
+import { RemoveVehicleDto } from './interfaces/remove-vehicle.dto';
 import { VehicleDto } from './vehicle.dto';
 import { VehiclesService } from './vehicles.service';
 
@@ -30,9 +32,27 @@ export class VehiclesController {
       `Saving new vehicle userId:  ${userId} - vehicle: ${JSON.stringify(
         vehicleDto,
       )}`,
-      'VehiclesService - registerVehicle',
+      'VehiclesController - registerVehicle',
     );
 
     return this.vehiclesService.registerVehicle(userId, vehicleDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('/remove')
+  async deleteVehicle(
+    @Session() session: Record<string, any>,
+    @Body() removeVehicleDto: RemoveVehicleDto,
+  ) {
+    const userId = session.user.id;
+    this.logger.log(
+      `Deleting vehicle userId:  ${userId} - licensePlate: ${removeVehicleDto.licensePlate}`,
+      'VehiclesController - deleteVehicle',
+    );
+
+    return this.vehiclesService.deleteVehicle(
+      userId,
+      removeVehicleDto.licensePlate,
+    );
   }
 }

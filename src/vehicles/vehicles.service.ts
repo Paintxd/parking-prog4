@@ -23,4 +23,11 @@ export class VehiclesService {
     return await this.userModel.findByIdAndUpdate(userId, { vehicles }).lean();
   }
 
+  async deleteVehicle(userId: string, licensePlate: string) {
+    const user = await this.userService.getUserById(userId);
+    const vehicles = user.vehicles.filter(vehicle => vehicle.licensePlate !== licensePlate);
+
+    return await this.userModel.findByIdAndUpdate(userId, { vehicles }).lean();
+  }
+
 }
