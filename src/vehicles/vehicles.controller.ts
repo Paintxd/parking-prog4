@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Logger,
   Patch,
   Post,
@@ -39,7 +40,7 @@ export class VehiclesController {
   }
 
   @UseGuards(AuthGuard)
-  @Patch('/remove')
+  @Delete('/remove')
   async deleteVehicle(
     @Session() session: Record<string, any>,
     @Body() removeVehicleDto: RemoveVehicleDto,
@@ -52,5 +53,22 @@ export class VehiclesController {
     );
 
     return this.vehiclesService.deleteVehicle(userId, licensePlate);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('/update')
+  async updateVehicle(
+    @Session() session: Record<string, any>,
+    @Body() vehicleDto: VehicleDto,
+  ) {
+    const userId = session.user.id;
+    this.logger.log(
+      `Updating vehicle userId:  ${userId} - vehicle: ${JSON.stringify(
+        vehicleDto,
+      )}`,
+      'VehiclesController - updateVehicle',
+    );
+
+    return this.vehiclesService.updateVehicle(userId, vehicleDto);
   }
 }

@@ -97,7 +97,7 @@
 			const deleteVehicle = (vehicleId, licensePlate) => {
 				$.ajax({
 					url: '/vehicles/remove',
-					type: 'PATCH',
+					type: 'DELETE',
 					data: {
 						licensePlate,
 					},

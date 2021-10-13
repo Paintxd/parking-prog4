@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
     }
 
     if (
-      new Date().getTime() - new Date(session.createAt).getTime() >
+      new Date().getTime() - new Date(session.createdAt).getTime() >
       parseInt(process.env.SESSION_MAXAGE)
     ) {
       this.logger.warn(
