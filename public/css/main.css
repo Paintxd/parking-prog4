@@ -1,0 +1,22 @@
+body {
+    min-height: 100vh;
+    padding: 5px;
+    background: linear-gradient(to bottom, #ccffff 0%, #000099 123%);
+}
+
+
+.imagem-princial {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+
+
+.login .password #botao-entrar {
+    display: block;
+    align-items: center;
+}
+
+
