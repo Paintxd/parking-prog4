@@ -13,6 +13,10 @@
 			+
 			name
 		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/@mdi/font@6.2.95/css/materialdesignicons.min.css"
+			rel="stylesheet"
+		/>
 	</head>
 
 	<body>
@@ -20,12 +24,14 @@
 			<h1>Bem vindo <%= user.name %></h1>
 			<nav>
 				<ul>
-					<li>
-						Saldo: <%= user.currency %>
-					</li>
+					<li>Saldo: <%= user.currency %></li>
 					<li>
 						<form action="/auth/logout" method="post">
-							<button type="submit">Logout</button>
+							<button class="btn btn-secondary" type="submit">
+								<span class="mdi mdi-account-arrow-left"
+									>Logout</span
+								>
+							</button>
 						</form>
 					</li>
 				</ul>
@@ -62,20 +68,120 @@
 			<ul id="vehicles">
 				<% user.vehicles.forEach(vehicle => { %>
 				<li id="<%= vehicle['_id'] %>">
-					<%= vehicle.description %><br />
-					<%= vehicle.licensePlate %><br />
+					<span id="vehicle-type"><%= vehicle.type %></span> <br />
+					<span id="vehicle-description"
+						><%= vehicle.description %></span
+					>
+					<br />
+					<span id="vehicle-licensePlate"
+						><%= vehicle.licensePlate %></span
+					>
+					<br />
+
 					<button
-						type="submit"
+						type="button"
+						class="btn btn-primary"
+						data-toggle="modal"
+						data-target="#updateVehicleModal"
+						,
+						onclick="updateVehicleForm(`<%= vehicle['_id'] %>`)"
+					>
+						<span class="mdi mdi-content-save-edit"></span>
+					</button>
+					<button
+						type="button"
+						class="btn btn-danger"
 						onclick="deleteVehicle(`<%= vehicle['_id'] %>`, `<%= vehicle.licensePlate %>`)"
 					>
-						Remover
+						<span class="mdi mdi-delete"></span>
 					</button>
 				</li>
 				<% }); %>
 			</ul>
 		</main>
 
+		<!-- Modal -->
+		<div
+			class="modal fade"
+			id="updateVehicleModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="updateVehicleModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="updateVehicleModalLabel">
+							Atualizar Veículo
+						</h5>
+						<button
+							type="button"
+							class="close"
+							data-dismiss="modal"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<label for="licensePlate"> Placa:</label>
+							<input
+								type="text"
+								id="edit-licensePlate"
+								name="licensePlate"
+								required
+								disabled
+								oninput="this.value = this.value.toUpperCase();"
+								maxlength="7"
+							/>
+							<br />
+
+							<label for="type"> Tipo do veículo:</label>
+							<select name="type" id="edit-type">
+								<option value="carro">Carro</option>
+								<option value="moto">Moto</option>
+								<option value="onibus">Onibus</option>
+								<option value="caminhao">Caminhao</option>
+							</select>
+							<br />
+
+							<label for="description"> Identificação:</label>
+							<input
+								type="text"
+								id="edit-description"
+								name="description"
+								required
+							/>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-dismiss="modal"
+						>
+							Fechar
+						</button>
+						<button
+							type="button"
+							class="btn btn-primary"
+							onclick="updateVehicle()"
+						>
+							Atualizar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<footer>
+			<script
+				src="https://code.jquery.com/jquery-3.6.0.min.js"
+				integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+				crossorigin="anonymous"
+			></script>
 			<script
 				src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 				integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -84,11 +190,6 @@
 			<script
 				src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
 				integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-				crossorigin="anonymous"
-			></script>
-			<script
-				src="https://code.jquery.com/jquery-3.6.0.min.js"
-				integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 				crossorigin="anonymous"
 			></script>
 		</footer>
@@ -103,6 +204,40 @@
 					},
 					success: (res) => {
 						$(`#${vehicleId}`).remove();
+					},
+				});
+			};
+
+			const updateVehicleForm = (vehicleId) => {
+				const licensePlate = $(
+					`#${vehicleId} #vehicle-licensePlate`,
+				).text();
+				const type = $(`#${vehicleId} #vehicle-type`).text();
+				const description = $(
+					`#${vehicleId} #vehicle-description`,
+				).text();
+
+				$('#edit-licensePlate').val(licensePlate);
+				$('#edit-type').val(type).change();
+				$('#edit-description').val(description);
+			};
+
+			const updateVehicle = () => {
+				const licensePlate = $('#edit-licensePlate').val();
+				const type = $('#edit-type').val();
+				const description = $('#edit-description').val();
+				console.log(licensePlate, type, description);
+
+				$.ajax({
+					url: '/vehicles/update',
+					type: 'PATCH',
+					data: {
+						licensePlate,
+						type,
+						description,
+					},
+					success: (res) => {
+						location.reload();
 					},
 				});
 			};
