@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Logger,
-  Render,
-  Session,
-  UseFilters,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Logger, Render, Session, UseFilters, UseGuards } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { AuthFilter } from './filters/auth.filter';

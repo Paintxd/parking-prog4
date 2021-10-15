@@ -1,5 +1,7 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { CreditCard } from './interfaces/card';
+import { Vehicle } from './interfaces/vehicle';
 
 export type UserDocument = User & Document;
 
@@ -30,7 +32,15 @@ export class User {
       licensePlate: { type: String },
     }),
   ])
-  vehicles: Record<string, any>[];
+  vehicles: Vehicle[];
+
+  @Prop([
+    raw({
+      creditCardNumber: { type: String },
+      creditCardExpiration: { type: Date },
+    }),
+  ])
+  cards: CreditCard[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

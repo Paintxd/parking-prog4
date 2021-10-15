@@ -30,18 +30,11 @@ export class AuthService {
       return { name: user.name, email: user.email, id: user['_id'] };
     }
 
-    this.logger.error(
-      'Authentication failed',
-      null,
-      'AuthService - validateUser',
-    );
+    this.logger.error('Authentication failed', null, 'AuthService - validateUser');
     throw new UnauthorizedException();
   }
 
-  async login(
-    user: LoginPayload,
-    session: Record<string, any>,
-  ): Promise<LoginPayload> {
+  async login(user: LoginPayload, session: Record<string, any>): Promise<LoginPayload> {
     session.user = user;
     session.createdAt = new Date(Date.now());
 

@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Logger,
-  Post,
-  Redirect,
-  Session,
-} from '@nestjs/common';
+import { Body, Controller, Logger, Post, Redirect, Session } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './login.dto';
 
@@ -18,10 +11,7 @@ export class AuthController {
 
   @Post('/login')
   @Redirect('/home')
-  async login(
-    @Body() loginDto: LoginDto,
-    @Session() session: Record<string, any>,
-  ) {
+  async login(@Body() loginDto: LoginDto, @Session() session: Record<string, any>) {
     this.logger.log(
       `Beginning user authentication - ${JSON.stringify(loginDto.login)}`,
       'AuthController - login',

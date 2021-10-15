@@ -6,12 +6,7 @@ import { ViewsController } from './controllers/views.controller';
 import { VehiclesModule } from './vehicles/vehicles.module';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot(process.env.MONGO_URL),
-    UserModule,
-    AuthModule,
-    VehiclesModule,
-  ],
+  imports: [MongooseModule.forRoot(process.env.MONGO_URL), UserModule, AuthModule, VehiclesModule],
   controllers: [ViewsController],
   providers: [],
 })

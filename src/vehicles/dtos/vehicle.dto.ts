@@ -14,7 +14,7 @@ export class VehicleDto {
   description: string;
 
   @IsEnum(VehicleType, {
-    message: `Tipo do veiculo deve ser ${Object.values(VehicleType)}`.split(',').join(', ')
+    message: `Tipo do veiculo deve ser ${Object.values(VehicleType)}`.split(',').join(', '),
   })
   type: string;
 

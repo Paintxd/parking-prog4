@@ -24,15 +24,10 @@ export class VehiclesController {
   @UseGuards(AuthGuard)
   @Post('/add')
   @Redirect('/home')
-  async registerVehicle(
-    @Session() session: Record<string, any>,
-    @Body() vehicleDto: VehicleDto,
-  ) {
+  async registerVehicle(@Session() session: Record<string, any>, @Body() vehicleDto: VehicleDto) {
     const userId = session.user.id;
     this.logger.log(
-      `Saving new vehicle userId:  ${userId} - vehicle: ${JSON.stringify(
-        vehicleDto,
-      )}`,
+      `Saving new vehicle userId:  ${userId} - vehicle: ${JSON.stringify(vehicleDto)}`,
       'VehiclesController - registerVehicle',
     );
 
@@ -57,15 +52,10 @@ export class VehiclesController {
 
   @UseGuards(AuthGuard)
   @Patch('/update')
-  async updateVehicle(
-    @Session() session: Record<string, any>,
-    @Body() vehicleDto: VehicleDto,
-  ) {
+  async updateVehicle(@Session() session: Record<string, any>, @Body() vehicleDto: VehicleDto) {
     const userId = session.user.id;
     this.logger.log(
-      `Updating vehicle userId:  ${userId} - vehicle: ${JSON.stringify(
-        vehicleDto,
-      )}`,
+      `Updating vehicle userId:  ${userId} - vehicle: ${JSON.stringify(vehicleDto)}`,
       'VehiclesController - updateVehicle',
     );
 

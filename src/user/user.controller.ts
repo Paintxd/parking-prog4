@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Logger,
-  Post,
-  Redirect,
-  Session,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Redirect, Session, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { DepositCurrencyDto } from './dtos/deposit-currenct.dto';
 import { UserDto } from './dtos/user.dto';
@@ -53,6 +44,6 @@ export class UserController {
       'UserController - depositCurrency',
     );
 
-    return this.userService.depositCurrency(userId, value);
+    return this.userService.depositCurrency(userId, depositCurrencyDto);
   }
 }
