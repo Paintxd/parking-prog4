@@ -37,7 +37,7 @@ export class User {
   @Prop([
     raw({
       creditCardNumber: { type: String },
-      creditCardExpiration: { type: Date },
+      creditCardExpiration: { type: String },
     }),
   ])
   cards: CreditCard[];

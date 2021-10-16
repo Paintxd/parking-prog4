@@ -1,5 +1,4 @@
 import { IsBoolean, Length, Min, Validate } from 'class-validator';
-import { IsAfter } from 'src/validiators/is-after.validator';
 
 export class DepositCurrencyDto {
   @Min(0)
@@ -15,8 +14,7 @@ export class DepositCurrencyDto {
   })
   creditCardCvv: string;
 
-  @Validate(IsAfter)
-  creditCardExpiration: Date;
+  creditCardExpiration: string;
 
   @IsBoolean()
   saveCard: boolean;
