@@ -30,16 +30,20 @@
 		</header>
 
 		<main>
-			<form action="/auth/login" method="post">
+			<form>
+				<p id="login-form-error"></p>
 				<div class="login">
 					<label for="login"> Digíte seu login:</label>
 					<input type="text" id="login" name="login" required />
+					<p id="error-login"></p>
 				</div>
 				<div class="password">
 					<label for="password">Digíte sua senha:</label>
 					<input type="password" id="password" name="password" required />
+					<p id="error-password"></p>
 				</div>
-				<input id="botao-entrar" type="submit" value="Entrar" />
+
+				<button type="button" class="btn btn-primary" onclick="authUser()">Login</button>
 			</form>
 		</main>
 
@@ -59,7 +63,36 @@
 				integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 				crossorigin="anonymous"
 			></script>
-			<script src="/public/js/errorValidation.js"></script>
+			<script src="/js/errorValidation.js"></script>
 		</footer>
+
+		<script>
+			const authUser = () => {
+				const login = $('#login').val();
+				const password = $('#password').val();
+				$('#error-login').text('');
+				$('#error-password').text('');
+
+				$.ajax({
+					url: '/auth/login',
+					type: 'POST',
+					data: {
+						login,
+						password,
+					},
+					success: (res) => {},
+					error: (err) => {
+						if (err.status !== 400) {
+							const errorElement = $(`#$login-form-error`);
+							errorElement.css({ 'text-transform': 'capitalize' });
+							errorElement.addClass('text-danger');
+							errorElement.text('Login ou senha invalidos');
+						}
+
+						formValidationError(err, '');
+					},
+				});
+			};
+		</script>
 	</body>
 </html>

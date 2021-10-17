@@ -1,6 +1,9 @@
-export const formValidationError = (err, formErrorId) => {
+const formValidationError = (err, formErrorId) => {
   if (err.status !== 400) {
-    $(`#${formErrorId}`).text(err.responseText);
+    const errorElement = $(`#${formErrorId}`);
+    errorElement.css({ 'text-transform': 'capitalize' });
+    errorElement.addClass('text-danger');
+    errorElement.text(err.responseJSON.message);
     return;
   }
 

@@ -255,7 +255,7 @@
 				integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 				crossorigin="anonymous"
 			></script>
-			<script src="/public/js/errorValidation.js"></script>
+			<script src="/js/errorValidation.js"></script>
 		</footer>
 
 		<script>
@@ -296,7 +296,6 @@
 				const licensePlate = $('#edit-licensePlate').val();
 				const type = $('#edit-type').val();
 				const description = $('#edit-description').val();
-				console.log(licensePlate, type, description);
 
 				$.ajax({
 					url: '/vehicles/update',
@@ -347,6 +346,12 @@
 				const creditCardCvv = $('#cvv').val();
 				const creditCardExpiration = $('#expiration-date').val();
 				const saveCard = $('#save-card').is(':checked');
+
+				$('#error-value').text('');
+				$('#error-creditCardNumber').text('');
+				$('#error-creditCardCvv').text('');
+				$('#error-creditCardExpiration').text('');
+				$('#error-saveCard').text('');
 
 				$.ajax({
 					url: '/user/currency',

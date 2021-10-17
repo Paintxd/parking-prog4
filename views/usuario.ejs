@@ -56,7 +56,29 @@
 				integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 				crossorigin="anonymous"
 			></script>
-			<script src="/public/js/errorValidation.js"></script>
+			<script src="/js/errorValidation.js"></script>
 		</footer>
+
+		<script>
+			const registerUser = () => {
+				const login = $('#login').val();
+				const password = $('#password').val();
+				$('#error-login').text('');
+				$('#error-password').text('');
+
+				$.ajax({
+					url: '/auth/login',
+					type: 'POST',
+					data: {
+						login,
+						password,
+					},
+					success: (res) => {},
+					error: (err) => {
+						formValidationError(err, '');
+					},
+				});
+			};
+		</script>
 	</body>
 </html>
