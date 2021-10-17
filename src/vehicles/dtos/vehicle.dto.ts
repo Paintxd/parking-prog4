@@ -9,7 +9,7 @@ enum VehicleType {
 
 export class VehicleDto {
   @Length(2, 20, {
-    message: 'Nome deve possuir no minimo 5 caracteres e no maximo 20',
+    message: 'Descricao deve possuir no minimo 2 caracteres e no maximo 20',
   })
   description: string;
 

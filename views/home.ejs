@@ -122,6 +122,7 @@
 					</div>
 					<div class="modal-body">
 						<form>
+							<p id="add-currency-form-error"></p>
 							<label for="value"> Valor adicionar:</label>
 							<input
 								type="number"
@@ -131,7 +132,7 @@
 								step="0.01"
 								required
 							/>
-							<br />
+							<p id="error-value"></p>
 
 							<label for="card-number"> Numero do cartão:</label>
 							<input
@@ -143,7 +144,7 @@
 								required
 							/>
 							<p id="notice">(no card number entered)</p>
-							<br />
+							<p id="error-creditCardNumber"></p>
 
 							<label for="cvv"> CVV:</label>
 							<input
@@ -154,7 +155,7 @@
 								minlength="3"
 								required
 							/>
-							<br />
+							<p id="error-creditCardCvv"></p>
 
 							<label for="expiration-date"> Data de expiração:</label>
 							<input
@@ -163,11 +164,11 @@
 								name="creditCardExpiration"
 								required
 							/>
-							<br />
+							<p id="error-creditCardExpiration"></p>
 
 							<label for="save-card"> Salvar cartão:</label>
 							<input type="checkbox" id="save-card" name="saveCard" value="true" />
-							<br />
+							<p id="error-saveCard"></p>
 						</form>
 					</div>
 					<div class="modal-footer">
@@ -254,6 +255,7 @@
 				integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 				crossorigin="anonymous"
 			></script>
+			<script src="/public/js/errorValidation.js"></script>
 		</footer>
 
 		<script>
@@ -358,6 +360,9 @@
 					},
 					success: (res) => {
 						location.reload();
+					},
+					error: (err) => {
+						formValidationError(err, 'add-currency-form-error');
 					},
 				});
 			};

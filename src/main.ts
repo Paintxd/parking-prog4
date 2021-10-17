@@ -22,7 +22,7 @@ async function bootstrap() {
       exceptionFactory: (errors: ValidationError[]) => {
         return new BadRequestException(
           errors.map((error: ValidationError) => {
-            return { target: error.property, fields: error.constraints };
+            return { target: error.property, fields: Object.values(error.constraints) };
           }),
         );
       },
