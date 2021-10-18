@@ -10,7 +10,6 @@ export class AuthController {
   }
 
   @Post('/login')
-  @Redirect('/home')
   async login(@Body() loginDto: LoginDto, @Session() session: Record<string, any>) {
     this.logger.log(
       `Beginning user authentication - ${JSON.stringify(loginDto.login)}`,

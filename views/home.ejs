@@ -47,7 +47,8 @@
 		</header>
 
 		<main>
-			<form action="/vehicles/add" method="post">
+			<form id="add-vehicle-form">
+				<p id="add-vehicle-form-error"></p>
 				<label for="type"> Tipo do veículo:</label>
 				<select name="type" id="type">
 					<option value="carro">Carro</option>
@@ -55,9 +56,11 @@
 					<option value="onibus">Onibus</option>
 					<option value="caminhao">Caminhao</option>
 				</select>
+				<p id="error-type"></p>
 
 				<label for="description"> Identificação:</label>
 				<input type="text" id="description" name="description" required />
+				<p id="error-description"></p>
 
 				<label for="licensePlate"> Placa:</label>
 				<input
@@ -68,8 +71,11 @@
 					oninput="this.value = this.value.toUpperCase();"
 					maxlength="7"
 				/>
+				<p id="error-licensePlate"></p>
 
-				<button type="submit">Adicionar</button>
+				<button type="button" class="btn btn-primary" onclick="addVehicle()">
+					Adicionar
+				</button>
 			</form>
 
 			<h2>Seus Veículos</h2>
@@ -121,7 +127,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form>
+						<form id="add-currency-form">
 							<p id="add-currency-form-error"></p>
 							<label for="value"> Valor adicionar:</label>
 							<input
@@ -201,7 +207,8 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form>
+						<form id="update-vehicle-form">
+							<p id="update-vehicle-form-error"></p>
 							<label for="licensePlate"> Placa:</label>
 							<input
 								type="text"
@@ -212,7 +219,7 @@
 								oninput="this.value = this.value.toUpperCase();"
 								maxlength="7"
 							/>
-							<br />
+							<p id="error-licensePlate"></p>
 
 							<label for="type"> Tipo do veículo:</label>
 							<select name="type" id="edit-type">
@@ -221,10 +228,11 @@
 								<option value="onibus">Onibus</option>
 								<option value="caminhao">Caminhao</option>
 							</select>
-							<br />
+							<p id="error-type"></p>
 
 							<label for="description"> Identificação:</label>
 							<input type="text" id="edit-description" name="description" required />
+							<p id="error-description"></p>
 						</form>
 					</div>
 					<div class="modal-footer">
@@ -269,6 +277,32 @@
 					.setAttribute('min', `${now.getFullYear()}-${month}`);
 			});
 
+			const addVehicle = () => {
+				const licensePlate = $('#licensePlate').val();
+				const type = $('#type').val();
+				const description = $('#description').val();
+
+				$('#error-licensePlate').text('');
+				$('#error-type').text('');
+				$('#error-description').text('');
+
+				$.ajax({
+					url: '/vehicles/add',
+					type: 'POST',
+					data: {
+						licensePlate,
+						type,
+						description,
+					},
+					success: (res) => {
+						window.location.replace('/home');
+					},
+					error: (err) => {
+						formValidationError(err, 'add-vehicle-form');
+					},
+				});
+			};
+
 			const deleteVehicle = (vehicleId, licensePlate) => {
 				$.ajax({
 					url: '/vehicles/remove',
@@ -287,6 +321,10 @@
 				const type = $(`#${vehicleId} #vehicle-type`).text();
 				const description = $(`#${vehicleId} #vehicle-description`).text();
 
+				$('#error-licensePlate').text('');
+				$('#error-type').text('');
+				$('#error-description').text('');
+
 				$('#edit-licensePlate').val(licensePlate);
 				$('#edit-type').val(type).change();
 				$('#edit-description').val(description);
@@ -296,6 +334,10 @@
 				const licensePlate = $('#edit-licensePlate').val();
 				const type = $('#edit-type').val();
 				const description = $('#edit-description').val();
+
+				$('#error-licensePlate').text('');
+				$('#error-type').text('');
+				$('#error-description').text('');
 
 				$.ajax({
 					url: '/vehicles/update',
@@ -307,6 +349,9 @@
 					},
 					success: (res) => {
 						location.reload();
+					},
+					error: (err) => {
+						formValidationError(err, 'update-vehicle-form');
 					},
 				});
 			};
@@ -356,18 +401,20 @@
 				$.ajax({
 					url: '/user/currency',
 					type: 'POST',
-					data: {
+					contentType: 'application/json',
+					dataType: 'json',
+					data: JSON.stringify({
 						value,
 						creditCardNumber,
 						creditCardCvv,
 						creditCardExpiration,
 						saveCard,
-					},
+					}),
 					success: (res) => {
 						location.reload();
 					},
 					error: (err) => {
-						formValidationError(err, 'add-currency-form-error');
+						formValidationError(err, 'add-currency-form');
 					},
 				});
 			};

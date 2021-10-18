@@ -23,7 +23,6 @@ export class VehiclesController {
 
   @UseGuards(AuthGuard)
   @Post('/add')
-  @Redirect('/home')
   async registerVehicle(@Session() session: Record<string, any>, @Body() vehicleDto: VehicleDto) {
     const userId = session.user.id;
     this.logger.log(

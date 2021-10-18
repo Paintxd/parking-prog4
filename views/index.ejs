@@ -70,6 +70,7 @@
 			const authUser = () => {
 				const login = $('#login').val();
 				const password = $('#password').val();
+
 				$('#error-login').text('');
 				$('#error-password').text('');
 
@@ -80,10 +81,12 @@
 						login,
 						password,
 					},
-					success: (res) => {},
+					success: (res) => {
+						window.location.replace('/home');
+					},
 					error: (err) => {
 						if (err.status !== 400) {
-							const errorElement = $(`#$login-form-error`);
+							const errorElement = $(`#login-form-error`);
 							errorElement.css({ 'text-transform': 'capitalize' });
 							errorElement.addClass('text-danger');
 							errorElement.text('Login ou senha invalidos');

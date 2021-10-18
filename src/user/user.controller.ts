@@ -21,7 +21,6 @@ export class UserController {
   }
 
   @Post('/register')
-  @Redirect('/')
   async registerUser(@Body() userDto: UserDto) {
     this.logger.log(
       `Registering user - userDto: ${JSON.stringify(userDto)}`,
@@ -32,7 +31,6 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Post('/currency')
-  @Redirect('/home')
   async depositCurrency(
     @Session() session: Record<string, any>,
     @Body() depositCurrencyDto: DepositCurrencyDto,
