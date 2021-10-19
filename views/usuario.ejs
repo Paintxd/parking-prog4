@@ -12,6 +12,15 @@
 			+
 			name
 		/>
+		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+		<script>
+			window.OneSignal = window.OneSignal || [];
+			OneSignal.push(function () {
+				OneSignal.init({
+					appId: 'ebc7694b-287f-496f-a29e-f6609a22ce79',
+				});
+			});
+		</script>
 	</head>
 
 	<body>
@@ -41,6 +50,10 @@
 				<input type="text" id="email" name="email" required />
 				<p id="error-email"></p>
 
+				<label for="phoneNumber">Telefone:</label>
+				<input type="text" id="phoneNumber" name="phoneNumber" required maxlength="11" minlength="10" />
+				<p id="error-phoneNumber"></p>
+
 				<button type="button" class="btn btn-primary" onclick="registerUser()">
 					Salvar
 				</button>
@@ -64,6 +77,8 @@
 				crossorigin="anonymous"
 			></script>
 			<script src="/js/errorValidation.js"></script>
+			<script src="/js/OneSignalSDKWorker.js"></script>
+			<script src="/js/OneSignalSDKUpdaterWorker.js"></script>
 		</footer>
 
 		<script>
@@ -73,12 +88,14 @@
 				const password = $('#password').val();
 				const cpf = $('#cpf').val();
 				const email = $('#email').val();
+				const phoneNumber = $('#phoneNumber').val();
 
 				$('#error-name').text('');
 				$('#error-login').text('');
 				$('#error-password').text('');
 				$('#error-cpf').text('');
 				$('#error-email').text('');
+				$('#error-phoneNumber').text('');
 
 				$.ajax({
 					url: '/user/register',
@@ -89,8 +106,12 @@
 						password,
 						cpf,
 						email,
+						phoneNumber,
 					},
 					success: (res) => {
+						OneSignal.push(function () {
+							OneSignal.showNativePrompt();
+						});
 						window.location.replace('/');
 					},
 					error: (err) => {

@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, Length } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsPhoneNumber, Length } from 'class-validator';
 
 export class UserDto {
   @Length(5, 20, {
@@ -21,6 +21,12 @@ export class UserDto {
   })
   @IsEmail()
   email: string;
+
+  @IsNotEmpty({
+    message: 'Obrigatorio informar um telefone',
+  })
+  @IsPhoneNumber('BR')
+  phoneNumber: string;
 
   @Length(11, 11, {
     message: 'Informe um CPF valido',

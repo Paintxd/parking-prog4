@@ -44,4 +44,17 @@ export class UserController {
 
     return this.userService.depositCurrency(userId, depositCurrencyDto);
   }
+
+  @UseGuards(AuthGuard)
+  @Post('/park')
+  async parkVehicle(
+    @Session() session: Record<string, any>,
+    @Body() parkDto: DepositCurrencyDto,
+  ) {
+    const userId = session.user.id;
+    this.logger.log(
+      `Parking vehicle userId:  ${userId} - parkDto: ${parkDto}`,
+      'UserController - parkVehicle',
+    );
+  }
 }
