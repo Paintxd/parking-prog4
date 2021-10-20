@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Logger, Post, Redirect, Session, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { DepositCurrencyDto } from './dtos/deposit-currenct.dto';
+import { ParkDto } from './dtos/park.dto';
 import { UserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 
@@ -49,7 +50,7 @@ export class UserController {
   @Post('/park')
   async parkVehicle(
     @Session() session: Record<string, any>,
-    @Body() parkDto: DepositCurrencyDto,
+    @Body() parkDto: ParkDto,
   ) {
     const userId = session.user.id;
     this.logger.log(

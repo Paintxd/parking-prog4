@@ -1,0 +1,82 @@
+<div
+	class="modal fade"
+	id="updateVehicleModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="updateVehicleModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="updateVehicleModalLabel">Atualizar Veículo</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="update-vehicle-form">
+					<p id="update-vehicle-form-error"></p>
+					<label for="licensePlate"> Placa:</label>
+					<input
+						type="text"
+						id="edit-licensePlate"
+						name="licensePlate"
+						required
+						disabled
+						oninput="this.value = this.value.toUpperCase();"
+						maxlength="7"
+					/>
+					<p id="error-licensePlate"></p>
+
+					<label for="type"> Tipo do veículo:</label>
+					<select name="type" id="edit-type">
+						<option value="carro">Carro</option>
+						<option value="moto">Moto</option>
+						<option value="onibus">Onibus</option>
+						<option value="caminhao">Caminhao</option>
+					</select>
+					<p id="error-type"></p>
+
+					<label for="description"> Identificação:</label>
+					<input type="text" id="edit-description" name="description" required />
+					<p id="error-description"></p>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+				<button type="button" class="btn btn-primary" onclick="updateVehicle()">
+					Atualizar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	const updateVehicle = () => {
+		const licensePlate = $('#edit-licensePlate').val();
+		const type = $('#edit-type').val();
+		const description = $('#edit-description').val();
+
+		$('#error-licensePlate').text('');
+		$('#error-type').text('');
+		$('#error-description').text('');
+
+		$.ajax({
+			url: '/vehicles/update',
+			type: 'PATCH',
+			data: {
+				licensePlate,
+				type,
+				description,
+			},
+			success: (res) => {
+				location.reload();
+			},
+			error: (err) => {
+				formValidationError(err, 'update-vehicle-form');
+			},
+		});
+	};
+</script>

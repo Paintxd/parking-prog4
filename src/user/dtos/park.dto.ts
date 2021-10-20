@@ -3,7 +3,7 @@ export class ParkDto {
 
   ownerDocument: string;
 
+  ownerPhoneNumber: string;
+
   parkedTime: string;
-
-
 }
