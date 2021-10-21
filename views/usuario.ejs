@@ -1,36 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<<<<<<< Updated upstream
 	<head>
 		<%- include('./partials/head', { title: 'Estacionamentinho' }); %>
 	</head>
+=======
 
-	<body>
-		<header>
-			<h1>Cadastro de Usuário</h1>
-		</header>
+<head>
+	<link rel="stylesheet" , href="/css/reset.css" />
+	<link rel="stylesheet" , href="/css/formcadastro.css" />
+	<title>Estacionamentinho</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"
+		title="Hello " + name />
+	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+	<script>
+		window.OneSignal = window.OneSignal || [];
+		OneSignal.push(function () {
+			OneSignal.init({
+				appId: 'ebc7694b-287f-496f-a29e-f6609a22ce79',
+			});
+		});
+	</script>
+</head>
+>>>>>>> Stashed changes
 
-		<main>
-			<form>
-				<label for="name">Nome:</label>
+<body>
+	<header>
+		<h1>Cadastro de Usuário</h1>
+	</header>
+
+	<main>
+		<form>
+			<div class="form tam-med">
+				<label class="label" for="name">Nome:</label>
 				<input type="text" id="name" name="name" required />
 				<p id="error-name"></p>
 
-				<label for="login">Login:</label>
+				<label class="label" for="login">Login:</label>
 				<input type="text" id="login" name="login" required />
 				<p id="error-login"></p>
 
-				<label for="password">Senha:</label>
+				<label class="label" for="password">Senha:</label>
 				<input type="password" id="password" name="password" required />
 				<p id="error-password"></p>
 
-				<label for="cpf">CPF:</label>
-				<input type="text" id="cpf" name="cpf" required />
+				<label class="label" for="cpf">CPF:</label>
+				<input type="text" id="cpf" name="cpf" onkeypress="$(this).mask('000.000.000-00');" required />
 				<p id="error-cpf"></p>
 
-				<label for="email">E-mail:</label>
-				<input type="text" id="email" name="email" required />
+				<label class="label for=" phoneNumber">Telefone:</label>
+				<input type="text" id="phoneNumber" name="phoneNumber" required maxlength="11" minlength="10"
+					onkeypress="$(this).mask('(00) 00000-0009')" />
+				<p id="error-phoneNumber"></p>
+
+				<label class="label" for="email">E-mail:</label>
+				<input type="email" id="email" name="email" required />
 				<p id="error-email"></p>
 
+<<<<<<< Updated upstream
 				<label for="phoneNumber">Telefone:</label>
 				<input
 					type="text"
@@ -41,31 +69,80 @@
 					minlength="10"
 				/>
 				<p id="error-phoneNumber"></p>
+=======
+>>>>>>> Stashed changes
 
+				<button type="button" onclick="window.location.href='/'" class="btn btn-primary back">
+					Voltar
+				</button>
 				<button type="button" class="btn btn-primary" onclick="registerUser()">
 					Salvar
 				</button>
-			</form>
-		</main>
+			</div>
+		</form>
+	</main>
 
+	<footer>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+			integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+			crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+			integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+			crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+		<script src="/js/errorValidation.js"></script>
+		<script src="/js/OneSignalSDKWorker.js"></script>
+		<script src="/js/OneSignalSDKUpdaterWorker.js"></script>
+	</footer>
+
+<<<<<<< Updated upstream
 		<%- include('./partials/footer'); %>
+=======
+	<script>
+		const registerUser = () => {
+			const name = $('#name').val();
+			const login = $('#login').val();
+			const password = $('#password').val();
+			const cpf = $('#cpf').val();
+			const email = $('#email').val();
+			const phoneNumber = $('#phoneNumber').val();
+>>>>>>> Stashed changes
 
-		<script>
-			const registerUser = () => {
-				const name = $('#name').val();
-				const login = $('#login').val();
-				const password = $('#password').val();
-				const cpf = $('#cpf').val();
-				const email = $('#email').val();
-				const phoneNumber = $('#phoneNumber').val();
+			$('#error-name').text('');
+			$('#error-login').text('');
+			$('#error-password').text('');
+			$('#error-cpf').text('');
+			$('#error-email').text('');
+			$('#error-phoneNumber').text('');
 
-				$('#error-name').text('');
-				$('#error-login').text('');
-				$('#error-password').text('');
-				$('#error-cpf').text('');
-				$('#error-email').text('');
-				$('#error-phoneNumber').text('');
+			$.ajax({
+				url: '/user/register',
+				type: 'POST',
+				data: {
+					name,
+					login,
+					password,
+					cpf,
+					email,
+					phoneNumber,
+				},
+				success: (res) => {
+					OneSignal.push(function () {
+						OneSignal.showNativePrompt();
+					});
+					window.location.replace('/');
+				},
+				error: (err) => {
+					formValidationError(err, '');
+				},
+			});
+		};
+	</script>
+</body>
 
+<<<<<<< Updated upstream
 				$.ajax({
 					url: '/user/register',
 					type: 'POST',
@@ -88,3 +165,6 @@
 		</script>
 	</body>
 </html>
+=======
+</html>
+>>>>>>> Stashed changes

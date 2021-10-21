@@ -26,16 +26,17 @@ body {
     outline: none;
 }
 
-form {
+.tam-med {
+    font-family: Arial;
     margin: 20px auto;
-    width: 300px;
+    width: 600px;
 }
 
 .form {
     text-align: center;
     background-color: #FFF;
     padding: 20px;
-    border-radius: 5px
+    border-radius: 5px;
 }
 
 img {
@@ -46,15 +47,20 @@ img {
     border: 2px solid transparent;
 }
 
+.form > .label {
+    text-align: left;
+    display: block;
+    font-weight: bold;
+}
+
 input {
-    text-align: center;
     background-color: #ECF0F1;
     border: 2px solid transparent;
     border-radius: 3px;
     font-size: 16px;
     font-weight: 200;
-    padding: 10px 0;
-    width: 250px;
+    padding: 10px;
+    width: 100%;
     transition: border .5s;
 }
 
@@ -62,7 +68,6 @@ input:focus {
     border: 2px solid #3498DB;
     box-shadow: none;
 }
-
 
 .btn {
     border: 2px solid transparent;
@@ -76,19 +81,18 @@ input:focus {
     border-radius: 3px;
     box-shadow: none;
     transition: 0.25s;
-    display: block;
-    width: 250px;
+    display: inline;
+    width: 70%;
     margin: 0 auto;
+}
+
+.back {
+    width: 25% !important;
+    background: #7e94a3 !important;
+    border-color: #7e94a3 !important;
+    color: #ffffff;
 }
 
 .btn:hover {
     background-color: #2980B9;
-}
-
-.link-cadastro {
-    font-weight: bold;
-    font-size: 14px;
-    color: #444;
-    display: block;
-    margin-top: 12px;
 }

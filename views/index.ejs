@@ -1,72 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<<<<<<< Updated upstream
 	<head>
 		<%- include('./partials/head', { title: 'Estacionamentinho' }); %>
 	</head>
+=======
+>>>>>>> Stashed changes
 
-	<body>
-		<header>
-			<div class="imagem-princial">
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" , href="/css/reset.css" />
+	<link rel="stylesheet" , href="/css/main.css" />
+	<title>Estacionamentinho</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"
+		title="Hello " + name />
+</head>
+
+<body>
+	<header>
+
+	</header>
+
+	<main>
+		<form>
+			<p id="login-form-error"></p>
+			<div class="form">
 				<img src="./img/logo.png" alt="logo da empresa" />
-			</div>
-			<h1>Seja bem vindo</h1>
-			<nav>
-				<ul>
-					<li><a href="/register">Cadastro Usuário</a></li>
-				</ul>
-			</nav>
-		</header>
-
-		<main>
-			<form>
-				<p id="login-form-error"></p>
 				<div class="login">
-					<label for="login"> Digíte seu login:</label>
-					<input type="text" id="login" name="login" required />
+					<input type="text" placeholder="Login" id="login" name="login" required />
 					<p id="error-login"></p>
 				</div>
 				<div class="password">
-					<label for="password">Digíte sua senha:</label>
-					<input type="password" id="password" name="password" required />
+					<input type="password" placeholder="Password" id="password" name="password" required />
 					<p id="error-password"></p>
 				</div>
 
 				<button type="button" class="btn btn-primary" onclick="authUser()">Login</button>
-			</form>
-		</main>
+				<nav>
+					<ul>
+						<li><a class="link-cadastro" href="/register">Cadastrar-se</a></li>
+					</ul>
+				</nav>
+			</div>
+		</form>
+	</main>
 
+	<footer>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+			integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+			crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+			integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+			crossorigin="anonymous"></script>
+		<script src="/js/errorValidation.js"></script>
+	</footer>
+
+<<<<<<< Updated upstream
 		<%- include('./partials/footer'); %>
+=======
+	<script>
+		const authUser = () => {
+			const login = $('#login').val();
+			const password = $('#password').val();
+>>>>>>> Stashed changes
 
-		<script>
-			const authUser = () => {
-				const login = $('#login').val();
-				const password = $('#password').val();
+			$('#error-login').text('');
+			$('#error-password').text('');
 
-				$('#error-login').text('');
-				$('#error-password').text('');
+			$.ajax({
+				url: '/auth/login',
+				type: 'POST',
+				data: {
+					login,
+					password,
+				},
+				success: (res) => {
+					window.location.replace('/home');
+				},
+				error: (err) => {
+					if (err.status !== 400) {
+						const errorElement = $(`#login-form-error`);
+						errorElement.addClass('text-danger');
+						errorElement.text('Login ou Senha inválidos!');
+					}
 
-				$.ajax({
-					url: '/auth/login',
-					type: 'POST',
-					data: {
-						login,
-						password,
-					},
-					success: (res) => {
-						window.location.replace('/home');
-					},
-					error: (err) => {
-						if (err.status !== 400) {
-							const errorElement = $(`#login-form-error`);
-							errorElement.css({ 'text-transform': 'capitalize' });
-							errorElement.addClass('text-danger');
-							errorElement.text('Login ou senha invalidos');
-						}
+					formValidationError(err, '');
+				},
+			});
+		};
+	</script>
+</body>
 
-						formValidationError(err, '');
-					},
-				});
-			};
-		</script>
-	</body>
 </html>
