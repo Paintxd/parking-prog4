@@ -26,7 +26,7 @@ export class VehiclesController {
   async registerVehicle(@Session() session: Record<string, any>, @Body() vehicleDto: VehicleDto) {
     const userId = session.user.id;
     this.logger.log(
-      `Saving new vehicle userId:  ${userId} - vehicle: ${JSON.stringify(vehicleDto)}`,
+      `Saving new vehicle userId: ${userId} - vehicle: ${JSON.stringify(vehicleDto)}`,
       'VehiclesController - registerVehicle',
     );
 
@@ -42,7 +42,7 @@ export class VehiclesController {
     const userId = session.user.id;
     const licensePlate = removeVehicleDto.licensePlate;
     this.logger.log(
-      `Deleting vehicle userId:  ${userId} - licensePlate: ${licensePlate}`,
+      `Deleting vehicle userId: ${userId} - licensePlate: ${licensePlate}`,
       'VehiclesController - deleteVehicle',
     );
 
@@ -54,7 +54,7 @@ export class VehiclesController {
   async updateVehicle(@Session() session: Record<string, any>, @Body() vehicleDto: VehicleDto) {
     const userId = session.user.id;
     this.logger.log(
-      `Updating vehicle userId:  ${userId} - vehicle: ${JSON.stringify(vehicleDto)}`,
+      `Updating vehicle userId: ${userId} - vehicle: ${JSON.stringify(vehicleDto)}`,
       'VehiclesController - updateVehicle',
     );
 

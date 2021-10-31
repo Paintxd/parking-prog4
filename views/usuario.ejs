@@ -8,15 +8,6 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"
 		title="Hello " + name />
-	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-	<script>
-		window.OneSignal = window.OneSignal || [];
-		OneSignal.push(function () {
-			OneSignal.init({
-				appId: 'ebc7694b-287f-496f-a29e-f6609a22ce79',
-			});
-		});
-	</script>
 </head>
 
 <body>
@@ -52,7 +43,7 @@
 				<input type="email" id="email" name="email" required />
 				<p id="error-email"></p>
 
-				<button type="button" onclick="window.location.href='/'" class="btn btn-primary back">
+				<button type="button" onclick="window.location.replace('/')" class="btn btn-primary back">
 					Voltar
 				</button>
 				<button type="button" class="btn btn-primary" onclick="registerUser()">
