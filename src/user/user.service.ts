@@ -59,15 +59,9 @@ export class UserService {
     }
 
     const user = await this.getUserById(userId);
-    const currency = (user.currency += depositCurrencyDto.value);
-    const cards = user.cards;
+    const currency = Number((user.currency += depositCurrencyDto.value).toFixed(2));
 
-    if (depositCurrencyDto.saveCard) {
-      const { creditCardNumber, creditCardExpiration } = depositCurrencyDto;
-      cards.push({ creditCardNumber, creditCardExpiration });
-    }
-
-    return await this.userModel.findByIdAndUpdate(userId, { currency, cards }).lean();
+    return await this.userModel.findByIdAndUpdate(userId, { currency }).lean();
   }
 
   async registerUser(userDto: UserDto): Promise<User> {

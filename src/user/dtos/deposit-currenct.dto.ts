@@ -15,7 +15,4 @@ export class DepositCurrencyDto {
   creditCardCvv: string;
 
   creditCardExpiration: string;
-
-  @IsBoolean()
-  saveCard: boolean;
 }

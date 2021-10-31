@@ -17,8 +17,16 @@
 			<div class="modal-body">
 				<form id="add-currency-form">
 					<p id="add-currency-form-error"></p>
-					<label for="value"> Valor adicionar:</label>
-					<input type="number" id="value" name="value" min="1" step="0.01" required />
+					<label for="value"> Valor desejado:</label>
+					<input
+						type="number"
+						id="value"
+						name="value"
+						min="1"
+						step="0.01"
+						onkeyup="this.value = Number(this.value).toFixed(2)"
+						required
+					/>
 					<p id="error-value"></p>
 
 					<label for="card-number"> Numero do cartão:</label>
@@ -30,7 +38,7 @@
 						onkeyup="validateCardNumber(this.value)"
 						required
 					/>
-					<p id="notice">(no card number entered)</p>
+					<p id="notice"></p>
 					<p id="error-creditCardNumber"></p>
 
 					<label for="cvv"> CVV:</label>
@@ -47,10 +55,6 @@
 					<label for="expiration-date"> Data de expiração:</label>
 					<input type="month" id="expiration-date" name="creditCardExpiration" required />
 					<p id="error-creditCardExpiration"></p>
-
-					<label for="save-card"> Salvar cartão:</label>
-					<input type="checkbox" id="save-card" name="saveCard" value="true" />
-					<p id="error-saveCard"></p>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -93,13 +97,11 @@
 		const creditCardNumber = $('#card-number').val();
 		const creditCardCvv = $('#cvv').val();
 		const creditCardExpiration = $('#expiration-date').val();
-		const saveCard = $('#save-card').is(':checked');
 
 		$('#error-value').text('');
 		$('#error-creditCardNumber').text('');
 		$('#error-creditCardCvv').text('');
 		$('#error-creditCardExpiration').text('');
-		$('#error-saveCard').text('');
 
 		$.ajax({
 			url: '/user/currency',
@@ -111,7 +113,6 @@
 				creditCardNumber,
 				creditCardCvv,
 				creditCardExpiration,
-				saveCard,
 			}),
 			success: (res) => {
 				location.reload();

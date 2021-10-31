@@ -36,14 +36,6 @@ export class User {
     }),
   ])
   vehicles: Vehicle[];
-
-  @Prop([
-    raw({
-      creditCardNumber: { type: String },
-      creditCardExpiration: { type: String },
-    }),
-  ])
-  cards: CreditCard[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
