@@ -27,7 +27,7 @@ export class AuthService {
     );
 
     if (user && passwordCompare) {
-      return { name: user.name, email: user.email, id: user['_id'] };
+      return { name: user.name, email: user.email, id: user['_id'], document: user.cpf };
     }
 
     this.logger.error('Authentication failed', null, 'AuthService - validateUser');

@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { rabbitmqConnection } from '../rabbitmq/connection';
 import { UserModule } from '../user/user.module';
 import { ParkController } from './park.controller';
+import { Park, ParkSchema } from './park.schema';
 import { ParkService } from './park.service';
 
 @Module({
-  imports: [UserModule],
+  imports: [MongooseModule.forFeature([{ name: Park.name, schema: ParkSchema }]), UserModule],
   providers: [
     ParkService,
     {
@@ -14,5 +16,6 @@ import { ParkService } from './park.service';
     },
   ],
   controllers: [ParkController],
+  exports: [ParkService],
 })
 export class ParkModule {}

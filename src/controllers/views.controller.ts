@@ -1,14 +1,15 @@
 import { Controller, Get, Logger, Render, Session, UseFilters, UseGuards } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { AuthGuard } from '../auth/auth.guard';
+import { ParkService } from '../parks/park.service';
 import { AuthFilter } from './filters/auth.filter';
 
 @Controller('')
 export class ViewsController {
-  private logger: Logger;
-  constructor(private readonly userService: UserService) {
-    this.logger = new Logger();
-  }
+  constructor(
+    private readonly userService: UserService,
+    private readonly parkService: ParkService,
+  ) {}
 
   @Render('index')
   @Get('/')
@@ -21,9 +22,15 @@ export class ViewsController {
   @UseGuards(AuthGuard)
   @UseFilters(AuthFilter)
   async home(@Session() session: Record<string, any>) {
-    const user = await this.userService.getUserById(session.user.id);
+    const { id, document } = session.user;
+    const [user, parks] = await Promise.all([
+      this.userService.getUserById(id),
+      this.parkService.userParkedVehicles(document),
+    ]);
+
     return {
       user,
+      parks,
     };
   }
 

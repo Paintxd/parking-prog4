@@ -1,9 +1,12 @@
-import { BadRequestException, HttpException, Inject, Injectable, Logger } from '@nestjs/common';
+import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { Channel } from 'amqplib';
+import { Model } from 'mongoose';
 import { UserService } from '../user/user.service';
 import { AddTimeDto } from './dtos/add-time.dto';
 import { RemoveParkDto } from './dtos/remove-park.dto';
 import { RequestParkDto } from './dtos/request-park.dto';
+import { Park, ParkDocument } from './park.schema';
 
 @Injectable()
 export class ParkService {
@@ -12,14 +15,22 @@ export class ParkService {
 
   constructor(
     @Inject('PARK_SERVICE') private readonly queueConnection: Channel,
+    @InjectModel(Park.name) private readonly parkModel: Model<ParkDocument>,
     private readonly userService: UserService,
   ) {
     this.logger = new Logger();
     this.exchange = process.env.EXCHANGE_NAME;
   }
 
+  async userParkedVehicles(userDocument: string) {
+    const userParks = await this.parkModel.find({ vehicleOwnerDocument: userDocument });
+    const now = new Date(Date.now());
+
+    return userParks.filter((park) => park.parkEndTime > now);
+  }
+
   async parkVehicle(requestParkDto: RequestParkDto, userId: string) {
-    const chargedAmount = Number((requestParkDto.parkedTime * 0.2).toFixed(2));
+    const chargedAmount = Number((requestParkDto.parkedTime * 0.02).toFixed(2));
     const user = await this.userService.getUserById(userId);
 
     if (user.currency < chargedAmount) {
@@ -51,7 +62,7 @@ export class ParkService {
   }
 
   async addTime(addTimeDto: AddTimeDto, userId: string) {
-    const chargedAmount = Number((addTimeDto.parkedTime * 0.2).toFixed(2));
+    const chargedAmount = Number((addTimeDto.parkedTime * 0.02).toFixed(2));
     const user = await this.userService.getUserById(userId);
 
     if (user.currency < chargedAmount) {

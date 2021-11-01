@@ -77,6 +77,15 @@
 						type="button"
 						class="btn btn-primary"
 						data-toggle="modal"
+						data-target="#parkVehicleModal"
+						onclick="parkVehicleForm(`<%= vehicle.licensePlate %>`)"
+					>
+						<span class="mdi mdi-car-brake-parking"></span>
+					</button>
+					<button
+						type="button"
+						class="btn btn-primary"
+						data-toggle="modal"
 						data-target="#updateVehicleModal"
 						onclick="updateVehicleForm(`<%= vehicle['_id'] %>`)"
 					>
@@ -95,6 +104,8 @@
 		</main>
 
 		<%- include('./modals/add-currency'); %>
+
+		<%- include('./modals/park-vehicle'); %>
 
 		<%- include('./modals/update-vehicle'); %>
 
@@ -148,6 +159,10 @@
 						$(`#${vehicleId}`).remove();
 					},
 				});
+			};
+
+			const parkVehicleForm = (vehicleLicensePlate) => {
+				$('#vehicleLicensePlate').val(vehicleLicensePlate);
 			};
 
 			const updateVehicleForm = (vehicleId) => {
