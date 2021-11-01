@@ -1,6 +1,5 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { CreditCard } from './interfaces/card';
 import { Vehicle } from './interfaces/vehicle';
 
 export type UserDocument = User & Document;
