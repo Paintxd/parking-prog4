@@ -32,6 +32,12 @@
 		</header>
 
 		<main>
+			<div class="parks">
+				<% parks.forEach(park => { %>
+					<span>Placa: <%= park.vehicleLicensePlate %></span>
+					<span id="<%= park['_id'] %>-countdown"></span>
+				<% }); %>
+			</div>
 			<form id="add-vehicle-form">
 				<p id="add-vehicle-form-error"></p>
 				<label for="type"> Tipo do veículo:</label>
@@ -112,6 +118,16 @@
 		<%- include('./partials/footer'); %>
 
 		<script>
+			$(document).ready(function () {
+				console.log('teste')
+				const parks = Array.isArray('<%= parks %>') ? '<%= parks %>' : [];
+				console.log('teste1')
+				console.log(parks)
+				parks.forEach(park => {
+					console.log(park['_id'])
+				});
+			});
+
 			document.addEventListener('DOMContentLoaded', () => {
 				const now = new Date(Date.now());
 				const nowMonth = now.getMonth() + 1;

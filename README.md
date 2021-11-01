@@ -8,9 +8,9 @@ Esse software irá conter:
 
 - [x] CRUD para o cadastro do Usuário
 - [x] CRUD para o cadastro do Veículo
-- [ ] Operações de Entrada/Saída de crédito por Usuário
+- [x] Operações de Entrada/Saída de crédito por Usuário
 - [x] Controle de Login com criptografia de senha
-- [ ] Controle de Tempo por veículo estacionado
+- [x] Controle de Tempo por veículo estacionado
 - [ ] Controle Entrada/Saída das vagas de estacionamento
 
 
