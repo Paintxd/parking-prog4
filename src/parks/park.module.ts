@@ -16,6 +16,5 @@ import { ParkService } from './park.service';
     },
   ],
   controllers: [ParkController],
-  exports: [ParkService],
 })
 export class ParkModule {}

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Logger, Patch, Post, Session, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Patch, Post, Session, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { AddTimeDto } from './dtos/add-time.dto';
 import { RemoveParkDto } from './dtos/remove-park.dto';
@@ -10,6 +10,12 @@ export class ParkController {
   private logger: Logger;
   constructor(private readonly parkService: ParkService) {
     this.logger = new Logger();
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('/actives')
+  async activeParks(@Session() session: Record<string, any>) {
+    return this.parkService.userParkedVehicles(session.user.document);
   }
 
   @UseGuards(AuthGuard)

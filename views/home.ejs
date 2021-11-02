@@ -32,11 +32,7 @@
 		</header>
 
 		<main>
-			<div class="parks">
-				<% parks.forEach(park => { %>
-					<span>Placa: <%= park.vehicleLicensePlate %></span>
-					<span id="<%= park['_id'] %>-countdown"></span>
-				<% }); %>
+			<div id="parks">
 			</div>
 			<form id="add-vehicle-form">
 				<p id="add-vehicle-form-error"></p>
@@ -117,17 +113,8 @@
 
 		<%- include('./partials/footer'); %>
 
+		<script src="https://cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js"></script>
 		<script>
-			$(document).ready(function () {
-				console.log('teste')
-				const parks = Array.isArray('<%= parks %>') ? '<%= parks %>' : [];
-				console.log('teste1')
-				console.log(parks)
-				parks.forEach(park => {
-					console.log(park['_id'])
-				});
-			});
-
 			document.addEventListener('DOMContentLoaded', () => {
 				const now = new Date(Date.now());
 				const nowMonth = now.getMonth() + 1;
@@ -136,6 +123,19 @@
 				document
 					.getElementById('expiration-date')
 					.setAttribute('min', `${now.getFullYear()}-${month}`);
+			});
+
+			$(document).ready(function () {
+				$.get('/park/actives', (res) => {
+					const div = $('#parks');
+					res.forEach(park => {
+						const licensePlate = `<span>Placa: ${park.vehicleLicensePlate}</span>`;
+						const countdown = $('<p style="font-weight: bold"></p>').countdown(new Date(park.parkEndTime), function(event) {
+						  $(this).html(event.strftime('%H:%M:%S'));
+						});
+						div.append(licensePlate, countdown);
+					});
+				});
 			});
 
 			const addVehicle = () => {

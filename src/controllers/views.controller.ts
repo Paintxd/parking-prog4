@@ -1,15 +1,11 @@
-import { Controller, Get, Logger, Render, Session, UseFilters, UseGuards } from '@nestjs/common';
+import { Controller, Get, Render, Session, UseFilters, UseGuards } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { AuthGuard } from '../auth/auth.guard';
-import { ParkService } from '../parks/park.service';
 import { AuthFilter } from './filters/auth.filter';
 
 @Controller('')
 export class ViewsController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly parkService: ParkService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Render('index')
   @Get('/')
@@ -22,15 +18,11 @@ export class ViewsController {
   @UseGuards(AuthGuard)
   @UseFilters(AuthFilter)
   async home(@Session() session: Record<string, any>) {
-    const { id, document } = session.user;
-    const [user, parks] = await Promise.all([
-      this.userService.getUserById(id),
-      this.parkService.userParkedVehicles(document),
-    ]);
+    const { id } = session.user;
+    const user = await this.userService.getUserById(id);
 
     return {
       user,
-      parks,
     };
   }
 
