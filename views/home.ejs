@@ -2,38 +2,35 @@
 <html lang="pt-BR">
 	<head>
 		<%- include('./partials/head', { title: 'Estacionamentinho' }); %>
+		<link rel="stylesheet" href="/css/home.css" />
 	</head>
-
 	<body>
-		<header>
+		<div class="logout-bemvindo">
+			<div></div>
 			<h1>Bem vindo <%= user.name %></h1>
-			<nav>
-				<ul>
-					<li>Saldo: <%= user.currency %></li>
-					<li>
-						<button
-							type="button"
-							class="btn btn-primary"
-							data-toggle="modal"
-							data-target="#addCurrencyModal"
-						>
-							<span class="mdi mdi-account-cash-outline">Adicionar Saldo</span>
-						</button>
-					</li>
-					<li>
-						<form action="/auth/logout" method="post">
-							<button class="btn btn-secondary" type="submit">
-								<span class="mdi mdi-account-arrow-left">Logout</span>
-							</button>
-						</form>
-					</li>
-				</ul>
-			</nav>
-		</header>
 
-		<main>
-			<div id="parks">
+			<div>
+				<form action="/auth/logout" method="post">
+					<button class="btn btn-secondary cor-cinza" type="submit">
+						<span class="mdi mdi-account-arrow-left">Logout</span>
+					</button>
+				</form>
 			</div>
+		</div>
+		<div class="saldo">
+			<p class="fonte-tam-18">Saldo: <%= user.currency %></p>
+			<button
+				type="button"
+				class="btn btn-primary"
+				data-toggle="modal"
+				data-target="#addCurrencyModal"
+			>
+				<span class="mdi mdi-account-cash-outline"> Adicionar Saldo</span>
+			</button>
+		</div>
+		<hr>
+		<main>
+			<div class="cadastro-veiculos" id="parks"></div>
 			<form id="add-vehicle-form">
 				<p id="add-vehicle-form-error"></p>
 				<label for="type"> Tipo do veículo:</label>
@@ -67,12 +64,12 @@
 
 			<h2>Seus Veículos</h2>
 			<ul id="vehicles">
-				<% user.vehicles.forEach(vehicle => { %>
+				<% user.vehicles.forEach(vehicle=> { %>
 				<li id="<%= vehicle['_id'] %>">
-					<span id="vehicle-type"><%= vehicle.type %></span> <br />
-					<span id="vehicle-description"><%= vehicle.description %></span>
+					<span id="vehicle-type"> <%= vehicle.type %> </span> <br />
+					<span id="vehicle-description"> <%= vehicle.description %> </span>
 					<br />
-					<span id="vehicle-licensePlate"><%= vehicle.licensePlate %></span>
+					<span id="vehicle-licensePlate"> <%= vehicle.licensePlate %> </span>
 					<br />
 
 					<button
@@ -105,13 +102,8 @@
 			</ul>
 		</main>
 
-		<%- include('./modals/add-currency'); %>
-
-		<%- include('./modals/park-vehicle'); %>
-
-		<%- include('./modals/update-vehicle'); %>
-
-		<%- include('./partials/footer'); %>
+		<%- include('./modals/add-currency'); %> <%- include('./modals/park-vehicle'); %> <%-
+		include('./modals/update-vehicle'); %> <%- include('./partials/footer'); %>
 
 		<script src="https://cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js"></script>
 		<script>
@@ -128,11 +120,14 @@
 			$(document).ready(function () {
 				$.get('/park/actives', (res) => {
 					const div = $('#parks');
-					res.forEach(park => {
+					res.forEach((park) => {
 						const licensePlate = `<span>Placa: ${park.vehicleLicensePlate}</span>`;
-						const countdown = $('<p style="font-weight: bold"></p>').countdown(new Date(park.parkEndTime), function(event) {
-						  $(this).html(event.strftime('%H:%M:%S'));
-						});
+						const countdown = $('<p style="font-weight: bold"></p>').countdown(
+							new Date(park.parkEndTime),
+							function (event) {
+								$(this).html(event.strftime('%H:%M:%S'));
+							},
+						);
 						div.append(licensePlate, countdown);
 					});
 				});

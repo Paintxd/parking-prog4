@@ -2,10 +2,16 @@
     box-sizing: border-box;
 }
 
-h1 {
+.alinhado-esquerda-bem-vindo {
+    font-size: 28px;
     font-family: Arial;
-    text-align: center;
-    color: #3498DB;
+    text-align: left;
+    color: white; 
+    text-shadow: black 0.1em 0.1em 0.2em
+}
+
+.bem-vindo {
+    display: inline-block;
 }
 
 #login-form-error {
@@ -26,17 +32,12 @@ body {
     outline: none;
 }
 
-.tam-med {
-    font-family: Arial;
-    margin: 20px auto;
-    width: 600px;
-}
 
 .form {
     text-align: center;
-    background-color: #ffffff2e;
+    background-color: #FFF;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 5px
 }
 
 img {
@@ -47,20 +48,15 @@ img {
     border: 2px solid transparent;
 }
 
-.form > .label {
-    text-align: left;
-    display: block;
-    font-weight: bold;
-}
-
 input {
+    text-align: center;
     background-color: #ECF0F1;
     border: 2px solid transparent;
     border-radius: 3px;
     font-size: 16px;
     font-weight: 200;
-    padding: 10px;
-    width: 100%;
+    padding: 10px 0;
+    width: 250px;
     transition: border .5s;
 }
 
@@ -68,6 +64,7 @@ input:focus {
     border: 2px solid #3498DB;
     box-shadow: none;
 }
+
 
 .btn {
     border: 2px solid transparent;
@@ -81,18 +78,35 @@ input:focus {
     border-radius: 3px;
     box-shadow: none;
     transition: 0.25s;
-    display: inline;
-    width: 70%;
+    display: block;
+    width: 250px;
     margin: 0 auto;
-}
-
-.back {
-    width: 25% !important;
-    background: #7e94a3 !important;
-    border-color: #7e94a3 !important;
-    color: #ffffff;
 }
 
 .btn:hover {
     background-color: #2980B9;
+}
+
+.saldo {
+    text-align: center;
+    padding: 10px;
+}
+
+.fonte-tam-18 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.logout-bemvindo {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    align-items: center;
+}
+
+.cor-cinza {
+    background: #777777;
+}
+
+.cor-cinza:hover {
+    background: #999999;
 }
