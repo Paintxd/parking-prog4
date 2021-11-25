@@ -110,3 +110,18 @@ input:focus {
 .cor-cinza:hover {
     background: #999999;
 }
+
+table {
+    width: 100%;
+  }
+
+  table, th, td {
+    border: 1px solid black;
+    color: #ffffff;
+    text-shadow: 0 0 3px black;
+  }
+
+  th {
+    text-align: center;
+    font-weight: bold;
+  }

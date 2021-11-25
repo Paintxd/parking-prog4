@@ -28,7 +28,7 @@
 				<span class="mdi mdi-account-cash-outline"> Adicionar Saldo</span>
 			</button>
 		</div>
-		<hr>
+		<hr />
 		<main>
 			<div class="cadastro-veiculos" id="parks"></div>
 			<form id="add-vehicle-form">
@@ -63,43 +63,64 @@
 			</form>
 
 			<h2>Seus Veículos</h2>
-			<ul id="vehicles">
-				<% user.vehicles.forEach(vehicle=> { %>
-				<li id="<%= vehicle['_id'] %>">
-					<span id="vehicle-type"> <%= vehicle.type %> </span> <br />
-					<span id="vehicle-description"> <%= vehicle.description %> </span>
-					<br />
-					<span id="vehicle-licensePlate"> <%= vehicle.licensePlate %> </span>
-					<br />
 
-					<button
-						type="button"
-						class="btn btn-primary"
-						data-toggle="modal"
-						data-target="#parkVehicleModal"
-						onclick="parkVehicleForm(`<%= vehicle.licensePlate %>`)"
-					>
-						<span class="mdi mdi-car-brake-parking"></span>
-					</button>
-					<button
-						type="button"
-						class="btn btn-primary"
-						data-toggle="modal"
-						data-target="#updateVehicleModal"
-						onclick="updateVehicleForm(`<%= vehicle['_id'] %>`)"
-					>
-						<span class="mdi mdi-content-save-edit"></span>
-					</button>
-					<button
-						type="button"
-						class="btn btn-danger"
-						onclick="deleteVehicle(`<%= vehicle['_id'] %>`, `<%= vehicle.licensePlate %>`)"
-					>
-						<span class="mdi mdi-delete"></span>
-					</button>
-				</li>
-				<% }); %>
-			</ul>
+			<table>
+				<tr>
+					<th>Tipo</th>
+					<th>Identificação</th>
+					<th>Placa</th>
+					<th>Estacionar</th>
+					<th>Editar</th>
+					<th>Excluir</th>
+				</tr>
+				<ul id="vehicles">
+					<% user.vehicles.forEach(vehicle=> { %>
+					<tr>
+						<div id="<%= vehicle['_id'] %>">
+							<td><span id="vehicle-type"> <%= vehicle.type %> </span></td>
+							<td>
+								<span id="vehicle-description"> <%= vehicle.description %> </span>
+							</td>
+							<td>
+								<span id="vehicle-licensePlate"> <%= vehicle.licensePlate %> </span>
+							</td>
+
+							<td>
+								<button
+									type="button"
+									class="btn btn-primary"
+									data-toggle="modal"
+									data-target="#parkVehicleModal"
+									onclick="parkVehicleForm(`<%= vehicle.licensePlate %>`)"
+								>
+									<span class="mdi mdi-car-brake-parking"></span>
+								</button>
+							</td>
+							<td>
+								<button
+									type="button"
+									class="btn btn-primary"
+									data-toggle="modal"
+									data-target="#updateVehicleModal"
+									onclick="updateVehicleForm(`<%= vehicle['_id'] %>`)"
+								>
+									<span class="mdi mdi-content-save-edit"></span>
+								</button>
+							</td>
+							<td>
+								<button
+									type="button"
+									class="btn btn-danger"
+									onclick="deleteVehicle(`<%= vehicle['_id'] %>`, `<%= vehicle.licensePlate %>`)"
+								>
+									<span class="mdi mdi-delete"></span>
+								</button>
+							</td>
+						</div>
+						<% }); %>
+					</tr>
+				</ul>
+			</table>
 		</main>
 
 		<%- include('./modals/add-currency'); %> <%- include('./modals/park-vehicle'); %> <%-
